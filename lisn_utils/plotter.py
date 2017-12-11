@@ -100,7 +100,7 @@ class MyFigure(object):
         t = self.figure.text(x, y, s, **kwargs)
         return t
 
-    def show(self, watermark=True):
+    def show(self, watermark=False):
         '''
         '''
         if watermark:
@@ -570,7 +570,7 @@ def plot_data_vars(gdo, X, Y, figname=None, localtime=False, prns=None, min_ele=
                     maxisY.append(np.nanmax(y))
                     minisY.append(np.nanmin(y))
                     if marks: 
-                        ax.text(np.nanmin(x), y[np.nonzero(x==np.nanmin(x))[0][0]], prn, size=8)
+                        ax.text(np.nanmin(x), y[np.nonzero(x==np.nanmin(x))[0][0]], prn, size=12, va='bottom', ha='right')
                     P = ax.plot(x, y, **pkwargs)
                     if s4legend and np.nanmax(y)>0.35:
                         L['%s' % prn] = P[0]
@@ -582,7 +582,7 @@ def plot_data_vars(gdo, X, Y, figname=None, localtime=False, prns=None, min_ele=
                     maxisY.append(np.nanmax(y))
                     minisY.append(np.nanmin(y))
                     if marks:
-                        ax.text(np.nanmin(x), y[np.nonzero(x==np.nanmin(x))[0][0]], prn, size=8)
+                        ax.text(np.nanmin(x), y[np.nonzero(x==np.nanmin(x))[0][0]], prn, size=12)
                     P = ax.scatter(x, y, c=c, s=2, edgecolor='none', cmap=fig.cmap, norm=norm)
             
     if colormap:
@@ -652,14 +652,14 @@ def plot_data_vars(gdo, X, Y, figname=None, localtime=False, prns=None, min_ele=
     if 'fullname' in gdo.station:
         ax.set_title(gdo.station['fullname'], size=12)
     else:
-        ax.set_title('Station: %s' % gdo.station['code'].upper(), size=12)
+        ax.set_title('STATION: %s, (%d, %d)' % (gdo.station['code'].upper(), gdo.station['location'][0], gdo.station['location'][1]), size=16)
     
     if gdo[0].epoch.date()==gdo[-1].epoch.date():
         fig.figure.text(0.05, 0.95, '%s' % dt1.strftime('%Y/%m/%d'),
-                        size=10, ha='left')
+                        size=12, ha='left')
     else:
         fig.figure.text(0.05, 0.95, '%s - %s' % (dt0.strftime('%Y/%m/%d'),
-                        dt1.strftime('%Y/%m/%d')), size=10, ha='left')
+                        dt1.strftime('%Y/%m/%d')), size=12, ha='left')
     
     info = ''
     ypos = 0.95
@@ -668,8 +668,8 @@ def plot_data_vars(gdo, X, Y, figname=None, localtime=False, prns=None, min_ele=
         ypos = 0.93
     
     info += 'elevation > %s' % min_ele
-    fig.figure.text(0.95, ypos, info, size=10, ha='right')
-    return fig.show()
+    fig.figure.text(0.95, ypos, info, size=12, ha='right')
+    return fig
 
 def plot_rnx(gdo, figname=None, localtime=False):
     '''
@@ -766,7 +766,7 @@ def plot_mag(mdo, figname=None, station=None, figure=None, scale=None):
             ax.plot(T[i:j], H[i:j], 'b')
             ax.plot(T[i:j], Z[i:j], 'g')
             ax.plot(T[i:j], D[i:j], 'r', shared=True)    
-        ax.ax.text(23.5, y1max-0.2*y1max, mdo.date.strftime('%d/%m/%Y'), size=8, ha='right', va='top')
+        ax.ax.text(23.5, y1max-0.2*y1max, mdo.date.strftime('%d/%m/%Y'), size=12, ha='right', va='top')
         msg = ''
     
     fig.set_xticks(size=8)

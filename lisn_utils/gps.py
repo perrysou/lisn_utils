@@ -3268,7 +3268,7 @@ class RNXData(Data):
         if 'location' in self.station:
             elem.update(*self.station['location'])
         else:
-            elem.update(*xyz2lla(*self.header['markerpos'][0]))
+            elem.update(*xyz2lla(*self.calcpos()))
         nprns = []
         for prn in self.arcs:
             if prn not in elem or not self.arcs[prn]:
@@ -3962,7 +3962,7 @@ class RNXRecord(dict):
             return True
         elif abs(self.ctec(prn))>990 or abs(self.ptec(prn))>99999990:
             return True
-        elif self[prn]['L2']==0 or self[prn]['P2']==0:
+        elif self[prn]['L2']==0:
             return True
         return False    
 
